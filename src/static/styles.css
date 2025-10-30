@@ -1,25 +1,25 @@
 /* Color palette */
 :root {
-  /* Primary colors */
-  --primary: #1a237e;
-  --primary-light: #534bae;
-  --primary-dark: #000051;
-  --primary-text: #ffffff;
+  /* Primary colors - School colors: lime green and white */
+  --primary: #32cd32;
+  --primary-light: #90ee90;
+  --primary-dark: #228b22;
+  --primary-text: #000000;
 
   /* Secondary colors */
-  --secondary: #ff6f00;
-  --secondary-light: #ffa040;
-  --secondary-dark: #c43e00;
-  --secondary-text: #ffffff;
+  --secondary: #32cd32;
+  --secondary-light: #90ee90;
+  --secondary-dark: #228b22;
+  --secondary-text: #000000;
 
   /* Neutral colors */
-  --background: #f5f5f5;
-  --surface: #ffffff;
+  --background: #ffffff;
+  --surface: #fafffe;
   --text-primary: #333333;
   --text-secondary: #666666;
   --border: #e0e0e0;
   --border-light: #f0f0f0;
-  --border-focus: #d0d0d0;
+  --border-focus: #32cd32;
 
   /* Feedback colors */
   --success: #2e7d32;
@@ -476,6 +476,97 @@ footer {
   font-size: 0.8rem;
 }
 
+/* Animated Git Branch Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: 
+    linear-gradient(90deg, transparent 0%, transparent calc(50% - 1px), var(--primary-light) calc(50% - 1px), var(--primary-light) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(0deg, transparent 0%, transparent calc(25% - 1px), var(--primary-light) calc(25% - 1px), var(--primary-light) calc(25% + 1px), transparent calc(25% + 1px)),
+    linear-gradient(45deg, transparent 0%, transparent calc(33% - 1px), var(--primary-light) calc(33% - 1px), var(--primary-light) calc(33% + 1px), transparent calc(33% + 1px)),
+    linear-gradient(-45deg, transparent 0%, transparent calc(66% - 1px), var(--primary-light) calc(66% - 1px), var(--primary-light) calc(66% + 1px), transparent calc(66% + 1px));
+  background-size: 300px 300px, 400px 400px, 350px 350px, 380px 380px;
+  background-position: 0 0, 100px 100px, 50px 50px, 150px 150px;
+  opacity: 0.15;
+  animation: gitBranch 60s linear infinite;
+}
+
+@keyframes gitBranch {
+  0% {
+    background-position: 0 0, 100px 100px, 50px 50px, 150px 150px;
+  }
+  100% {
+    background-position: 300px 300px, 400px 400px, 400px 400px, 530px 530px;
+  }
+}
+
+/* Mascot Decorations */
+.mascot-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.mascot {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.mascot-1 {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.mascot-2 {
+  top: 15%;
+  right: 5%;
+  animation-delay: 1.5s;
+}
+
+.mascot-3 {
+  bottom: 15%;
+  left: 8%;
+  animation-delay: 3s;
+}
+
+.mascot-4 {
+  bottom: 10%;
+  right: 8%;
+  animation-delay: 4.5s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Make mascots smaller on mobile */
+@media (max-width: 767px) {
+  .mascot {
+    width: 80px;
+    height: 80px;
+    opacity: 0.2;
+  }
+}
+
 /* Search and Filter Components - Updated for Sidebar */
 .search-box {
   display: flex;
@@ -667,4 +758,67 @@ footer {
 
 #logout-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Social Sharing Buttons */
+.share-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.share-button {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.share-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.share-button.facebook {
+  background-color: #1877f2;
+  color: white;
+  border-color: #1877f2;
+}
+
+.share-button.twitter {
+  background-color: #1da1f2;
+  color: white;
+  border-color: #1da1f2;
+}
+
+.share-button.email {
+  background-color: var(--secondary);
+  color: white;
+  border-color: var(--secondary);
+}
+
+.share-button.copy {
+  background-color: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+.share-button.copied {
+  background-color: var(--info);
+  border-color: var(--info);
+}
+
+.share-icon {
+  font-size: 0.9rem;
 }
