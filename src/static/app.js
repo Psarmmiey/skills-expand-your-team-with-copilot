@@ -502,24 +502,31 @@ document.addEventListener("DOMContentLoaded", () => {
       case 'copy':
         // Copy link to clipboard
         const copyText = `${activityName} - ${shareUrl}`;
-        navigator.clipboard.writeText(copyText).then(() => {
-          // Find the button that was clicked and update its text temporarily
-          const copyButton = document.querySelector(`.share-button.copy[data-activity="${activityName}"]`);
-          if (copyButton) {
-            const originalText = copyButton.querySelector('span:last-child').textContent;
-            copyButton.querySelector('span:last-child').textContent = 'Copied!';
-            copyButton.classList.add('copied');
-            
-            setTimeout(() => {
-              copyButton.querySelector('span:last-child').textContent = originalText;
-              copyButton.classList.remove('copied');
-            }, 2000);
-          }
-          showMessage('Link copied to clipboard!', 'success');
-        }).catch((err) => {
-          console.error('Failed to copy:', err);
-          showMessage('Failed to copy link. Please try again.', 'error');
-        });
+        
+        // Check if clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(copyText).then(() => {
+            // Find the button that was clicked and update its text temporarily
+            const copyButton = document.querySelector(`.share-button.copy[data-activity="${activityName}"]`);
+            if (copyButton) {
+              const originalText = copyButton.querySelector('span:last-child').textContent;
+              copyButton.querySelector('span:last-child').textContent = 'Copied!';
+              copyButton.classList.add('copied');
+              
+              setTimeout(() => {
+                copyButton.querySelector('span:last-child').textContent = originalText;
+                copyButton.classList.remove('copied');
+              }, 2000);
+            }
+            showMessage('Link copied to clipboard!', 'success');
+          }).catch((err) => {
+            console.error('Failed to copy:', err);
+            showMessage('Failed to copy link. Please try again.', 'error');
+          });
+        } else {
+          // Fallback for browsers that don't support clipboard API
+          showMessage(`Copy this link: ${copyText}`, 'info');
+        }
         break;
     }
   }
