@@ -1,0 +1,105 @@
+name: Request a New Feature
+description: Suggest a new feature or capability for the website
+title: "[Feature Request]: "
+labels: ["enhancement", "feature-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Request a New Feature
+        Use this form to suggest new functionality for the activities website.
+        
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: What Feature Would You Like?
+      description: Describe the new feature or capability you'd like to see
+      placeholder: "e.g., Ability to send emails to students, export list of participants, calendar view of activities"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: What Problem Does This Solve?
+      description: Explain what problem this feature would help solve or what it would make easier
+      placeholder: "e.g., Currently it's hard to contact students about schedule changes, we need a way to see all activities at once"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: how-it-works
+    attributes:
+      label: How Should It Work?
+      description: Describe how you imagine using this feature
+      placeholder: |
+        1. I would click...
+        2. Then I would enter...
+        3. The website would...
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: who-uses-it
+    attributes:
+      label: Who Would Use This Feature?
+      description: Who is this feature for?
+      options:
+        - Teachers only
+        - Students only
+        - Both teachers and students
+        - Administrators only
+        - Everyone
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: priority
+    attributes:
+      label: How Important Is This?
+      description: How much would this feature help you?
+      options:
+        - Critical - We really need this to function
+        - High - Would be very helpful
+        - Medium - Nice to have
+        - Low - Just an idea
+    validations:
+      required: true
+      
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Current Workaround
+      description: How are you handling this now without the feature?
+      placeholder: "e.g., We're currently using a separate spreadsheet, we manually email each student"
+    validations:
+      required: false
+      
+  - type: textarea
+    id: example-reference
+    attributes:
+      label: Examples or References
+      description: Share links to other websites or systems that have similar features
+      placeholder: "Optional: URLs or descriptions of similar features elsewhere"
+    validations:
+      required: false
+      
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details about this feature request
+      placeholder: "Optional: Add any other relevant information"
+    validations:
+      required: false
+      
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## Acceptance Criteria
+        - The new feature is implemented as described
+        - The feature works reliably and correctly
+        - The feature integrates smoothly with the existing website
+        - Documentation or help text is provided for the new feature (if needed)
+        - The feature is easy to use and understand
