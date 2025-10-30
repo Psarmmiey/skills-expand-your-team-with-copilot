@@ -1,0 +1,96 @@
+name: Change Website Appearance
+description: Request changes to the look and feel of the website
+title: "[UI Change]: "
+labels: ["enhancement", "ui", "design"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Change Website Appearance
+        Use this form to request visual or styling changes to the website.
+        
+  - type: dropdown
+    id: change-area
+    attributes:
+      label: What part of the website needs to change?
+      description: Select the area that needs styling changes
+      options:
+        - Colors (background, text, buttons)
+        - Layout (spacing, positioning, arrangement)
+        - Fonts (size, style, typeface)
+        - Activity cards (how activities are displayed)
+        - Header or footer
+        - Filters and search
+        - Buttons and forms
+        - Other
+    validations:
+      required: true
+      
+  - type: textarea
+    id: current-issue
+    attributes:
+      label: What's Wrong Currently?
+      description: Describe what you don't like about the current appearance
+      placeholder: "e.g., The text is too small to read, the colors are too bright, the buttons are hard to find"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: desired-change
+    attributes:
+      label: How Should It Look?
+      description: Describe how you want it to look instead
+      placeholder: "e.g., Make the text larger, use softer colors, make the buttons more prominent"
+    validations:
+      required: true
+      
+  - type: input
+    id: color-preference
+    attributes:
+      label: Color Preferences (if changing colors)
+      description: What colors would you like to use?
+      placeholder: "e.g., Blue and white, school colors (maroon and gold)"
+    validations:
+      required: false
+      
+  - type: textarea
+    id: example-reference
+    attributes:
+      label: Reference Examples
+      description: Share links to websites or images that show what you're looking for
+      placeholder: "Optional: Paste URLs to examples or describe similar websites"
+    validations:
+      required: false
+      
+  - type: checkboxes
+    id: accessibility
+    attributes:
+      label: Accessibility Considerations
+      description: Are there any accessibility needs for this change?
+      options:
+        - label: Need higher contrast for better readability
+        - label: Need larger text for easier reading
+        - label: Need clearer visual indicators
+        - label: Other accessibility needs (explain in additional info)
+    validations:
+      required: false
+      
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details about the desired changes
+      placeholder: "Optional: Add any other information that would help"
+    validations:
+      required: false
+      
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## Acceptance Criteria
+        - The requested visual changes are applied to the website
+        - The website still works correctly on different screen sizes (phones, tablets, computers)
+        - All text remains readable
+        - All buttons and interactive elements still work properly
+        - The changes maintain a professional appearance suitable for a school website

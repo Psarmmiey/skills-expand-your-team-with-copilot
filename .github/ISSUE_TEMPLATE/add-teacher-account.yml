@@ -1,0 +1,71 @@
+name: Add Teacher Account
+description: Request a new teacher account to be created in the system
+title: "[New Teacher]: "
+labels: ["enhancement", "user-management"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Add New Teacher Account
+        Use this form to request a new teacher account so they can manage student activity registrations.
+        
+  - type: input
+    id: teacher-name
+    attributes:
+      label: Teacher's Full Name
+      description: What is the teacher's name?
+      placeholder: "e.g., Ms. Rodriguez, Mr. Chen"
+    validations:
+      required: true
+      
+  - type: input
+    id: username
+    attributes:
+      label: Username
+      description: What username should the teacher use to log in?
+      placeholder: "e.g., mrodriguez, jchen (lowercase, no spaces)"
+    validations:
+      required: true
+      
+  - type: input
+    id: initial-password
+    attributes:
+      label: Initial Password
+      description: What should the initial password be? (Teacher should change this after first login)
+      placeholder: "e.g., Welcome2024"
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: role
+    attributes:
+      label: Account Role
+      description: What level of access should this account have?
+      options:
+        - Teacher (standard access)
+        - Admin (full access)
+    validations:
+      required: true
+      
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details about this teacher or their responsibilities
+      placeholder: "Optional: e.g., Department, subjects taught, activities supervised"
+    validations:
+      required: false
+      
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## Acceptance Criteria
+        - A new teacher account is created with the specified username
+        - The teacher can log in using the provided username and password
+        - The teacher's display name appears correctly when logged in
+        - The teacher has the appropriate role (teacher or admin)
+        - The teacher can register and unregister students for activities
+        
+        ## Security Note
+        The password will be securely hashed in the database. The teacher should change their password after first login.
