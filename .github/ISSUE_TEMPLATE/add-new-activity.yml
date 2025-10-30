@@ -1,0 +1,106 @@
+name: Add New Activity
+description: Request a new extracurricular activity to be added to the system
+title: "[New Activity]: "
+labels: ["enhancement", "activity"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Add a New Activity
+        Use this form to request adding a new extracurricular activity for students.
+        
+  - type: input
+    id: activity-name
+    attributes:
+      label: Activity Name
+      description: What is the name of the new activity?
+      placeholder: "e.g., Photography Club, Coding Workshop, Yoga Class"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: description
+    attributes:
+      label: Activity Description
+      description: Provide a clear description of what students will do in this activity
+      placeholder: "e.g., Learn photography basics, take amazing photos, and participate in photo contests"
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: category
+    attributes:
+      label: Activity Category
+      description: What category best fits this activity?
+      options:
+        - Sports
+        - Arts
+        - Academic
+        - Community
+        - Technology
+        - Other
+    validations:
+      required: true
+      
+  - type: checkboxes
+    id: schedule-days
+    attributes:
+      label: Days of the Week
+      description: Select all days when this activity will meet
+      options:
+        - label: Monday
+        - label: Tuesday
+        - label: Wednesday
+        - label: Thursday
+        - label: Friday
+        - label: Saturday
+        - label: Sunday
+    validations:
+      required: true
+      
+  - type: input
+    id: start-time
+    attributes:
+      label: Start Time
+      description: When does the activity start? (Use 24-hour format)
+      placeholder: "e.g., 15:30 for 3:30 PM, 07:00 for 7:00 AM"
+    validations:
+      required: true
+      
+  - type: input
+    id: end-time
+    attributes:
+      label: End Time
+      description: When does the activity end? (Use 24-hour format)
+      placeholder: "e.g., 17:00 for 5:00 PM, 08:30 for 8:30 AM"
+    validations:
+      required: true
+      
+  - type: input
+    id: max-participants
+    attributes:
+      label: Maximum Number of Participants
+      description: How many students can join this activity?
+      placeholder: "e.g., 20"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details about the activity (equipment needed, location, special requirements, etc.)
+      placeholder: "Optional: Add any other relevant information"
+    validations:
+      required: false
+      
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ## Acceptance Criteria
+        - A new activity with the specified name appears in the activities list
+        - The activity shows the correct description, schedule, and participant limit
+        - Students can sign up for the activity (when logged in as a teacher)
+        - The activity appears in the correct category filter
+        - The activity appears when filtering by the scheduled days
