@@ -287,25 +287,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // If schedule_details is available, use the structured data
     if (details.schedule_details) {
       const days = details.schedule_details.days.join(", ");
-
-      // Convert 24h time format to 12h AM/PM format for display
-      const formatTime = (time24) => {
-        const [hours, minutes] = time24.split(":").map((num) => parseInt(num));
-        const period = hours >= 12 ? "PM" : "AM";
-        const displayHours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
-        return `${displayHours}:${minutes
-          .toString()
-          .padStart(2, "0")} ${period}`;
-      };
-
       const startTime = formatTime(details.schedule_details.start_time);
       const endTime = formatTime(details.schedule_details.end_time);
-
       return `${days}, ${startTime} - ${endTime}`;
     }
 
     // Fallback to the string format if schedule_details isn't available
     return details.schedule;
+  }
+
+  // Helper function to convert 24h time to 12h AM/PM format
+  function formatTime(time24) {
+    const [hours, minutes] = time24.split(":").map((num) => parseInt(num));
+    const period = hours >= 12 ? "PM" : "AM";
+    const displayHours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+    return `${displayHours}:${minutes
+      .toString()
+      .padStart(2, "0")} ${period}`;
   }
 
   // Function to determine activity type (this would ideally come from backend)
@@ -936,14 +934,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Now populate with activities
     populateCalendarActivities();
-  }
-
-  // Helper function to convert 24h time to 12h AM/PM format
-  function formatTime(time24) {
-    const [hours, minutes] = time24.split(":").map(num => parseInt(num));
-    const period = hours >= 12 ? "PM" : "AM";
-    const displayHours = hours % 12 || 12;
-    return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
   }
 
   // Helper function to convert time to minutes for comparison
