@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Dark mode functionality
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  const darkModeIcon = document.getElementById("dark-mode-icon");
+
+  // Check for saved dark mode preference
+  function initializeDarkMode() {
+    const isDarkMode = localStorage.getItem("darkMode") === "true";
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+      darkModeIcon.textContent = "☀️";
+    }
+  }
+
+  // Toggle dark mode
+  function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("darkMode", isDarkMode);
+    darkModeIcon.textContent = isDarkMode ? "☀️" : "🌙";
+  }
+
+  // Add event listener to dark mode toggle
+  darkModeToggle.addEventListener("click", toggleDarkMode);
+
+  // Initialize dark mode on page load
+  initializeDarkMode();
+
   // DOM elements
   const activitiesList = document.getElementById("activities-list");
   const messageDiv = document.getElementById("message");
@@ -533,6 +559,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Function to handle sharing an activity
+  function handleShare(activityName, shareType, details) {
+    const formattedSchedule = formatSchedule(details);
+    const shareUrl = `${window.location.origin}${window.location.pathname}`;
+    const shareText = `Check out this activity at Mergington High School: ${activityName}! ${details.description} Schedule: ${formattedSchedule}`;
+    const emailSubject = `Mergington High School Activity: ${activityName}`;
+    const emailBody = `Hi,\n\nI wanted to share this activity with you:\n\n${activityName}\n${details.description}\n\nSchedule: ${formattedSchedule}\n\nLearn more at: ${shareUrl}`;
+
+    switch (shareType) {
+      case 'facebook':
+        // Facebook share dialog
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+        window.open(facebookUrl, '_blank', 'width=600,height=400');
+        break;
+
+      case 'twitter':
+        // Twitter share dialog
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        window.open(twitterUrl, '_blank', 'width=600,height=400');
+        break;
+
+      case 'email':
+        // Email share
+        const mailtoUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = mailtoUrl;
+        break;
+
+      case 'copy':
+        // Copy link to clipboard
+        const copyText = `${activityName} - ${shareUrl}`;
+        
+        // Check if clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(copyText).then(() => {
+            // Find the button that was clicked and update its text temporarily
+            const copyButton = document.querySelector(`.share-button.copy[data-activity="${activityName}"]`);
+            if (copyButton) {
+              const originalText = copyButton.querySelector('span:last-child').textContent;
+              copyButton.querySelector('span:last-child').textContent = 'Copied!';
+              copyButton.classList.add('copied');
+              
+              setTimeout(() => {
+                copyButton.querySelector('span:last-child').textContent = originalText;
+                copyButton.classList.remove('copied');
+              }, 2000);
+            }
+            showMessage('Link copied to clipboard!', 'success');
+          }).catch((err) => {
+            console.error('Failed to copy:', err);
+            showMessage('Failed to copy link. Please try again.', 'error');
+          });
+        } else {
+          // Fallback for browsers that don't support clipboard API
+          showMessage(`Copy this link: ${copyText}`, 'info');
+        }
+        break;
+    }
+  }
+
   // Function to create activity card element (extracted from renderActivityCard)
   function createActivityCardElement(name, details) {
     const activityCard = document.createElement("div");
@@ -630,6 +715,24 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      <div class="share-buttons">
+        <button class="share-button facebook" data-activity="${name}" data-share-type="facebook" title="Share on Facebook">
+          <span class="share-icon">📘</span>
+          <span>Facebook</span>
+        </button>
+        <button class="share-button twitter" data-activity="${name}" data-share-type="twitter" title="Share on Twitter">
+          <span class="share-icon">🐦</span>
+          <span>Twitter</span>
+        </button>
+        <button class="share-button email" data-activity="${name}" data-share-type="email" title="Share via Email">
+          <span class="share-icon">✉️</span>
+          <span>Email</span>
+        </button>
+        <button class="share-button copy" data-activity="${name}" data-share-type="copy" title="Copy Link">
+          <span class="share-icon">🔗</span>
+          <span>Copy Link</span>
+        </button>
+      </div>
     `;
 
     // Add click handlers for delete buttons
@@ -637,6 +740,7 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteButtons.forEach((button) => {
       button.addEventListener("click", handleUnregister);
     });
+
 
     // Add click handler for register button (only when authenticated)
     if (currentUser) {
@@ -647,6 +751,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     }
+
+    // Add click handlers for share buttons
+    const shareButtons = activityCard.querySelectorAll(".share-button");
+    shareButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        handleShare(button.dataset.activity, button.dataset.shareType, details);
+      });
+    });
 
     return activityCard;
   }
